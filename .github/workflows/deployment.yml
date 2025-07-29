@@ -1,0 +1,24 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deployment_pipeline:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.7.0'
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run eslint
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm run test
