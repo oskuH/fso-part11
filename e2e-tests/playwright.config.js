@@ -26,7 +26,7 @@ if (process.env.CI) {
   webServerConfig.push({
     command: 'npm run start:e2e-tests',
     cwd: '../backend',
-    url: 'http://localhost:3003',
+    url: 'http://localhost:3003/api/health',
     reuseExistingServer: !process.env.CI,
     env: {
       TEST_MONGODB_URI: process.env.TEST_MONGODB_URI,

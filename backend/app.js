@@ -30,6 +30,9 @@ app.use(express.json());
 app.use(middleware.requestLogger);
 app.use(middleware.tokenExtractor);
 
+app.get('/api/health', (req, res) => {
+  res.status(200).send('OK');
+});
 app.use('/api/login', loginRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/blogs', blogsRouter);
