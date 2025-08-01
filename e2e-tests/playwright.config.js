@@ -33,7 +33,6 @@ if (process.env.CI) {
       SECRET: process.env.SECRET,
       PORT: 3003
     },
-    stdout: 'pipe'
   })
 } else {
   webServerConfig.push({
