@@ -13,6 +13,30 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.7.0'
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+      #- name: Lint frontend
+      #  working-directory: ./frontend
+      #  run: npm run eslint
+      #- name: Run frontend tests
+      #  working-directory: ./frontend
+      #  run: npm test
+      #- name: Build frontend
+      #  working-directory: ./frontend
+      #  run: npm run build
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
+      #- name: Lint backend
+      #  working-directory: ./backend
+      #  run: npm run eslint
+      #- name: Run backend tests
+      #  working-directory: ./backend
+      #  env:
+      #    TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      #    SECRET: ${{ secrets.SECRET }}
+      #  run: npm run test:CI
       - name: Install E2E test dependencies
         working-directory: ./e2e-tests
         run: npm install
