@@ -12,6 +12,36 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
+
+const webServerConfig = [
+  {
+    command: 'npm run dev',
+    cwd: '../frontend',
+    url: 'http://localhost:5173',
+    reuseExistingServer: !process.env.CI,
+  }
+]
+
+if (process.env.CI) {
+  webServerConfig.push({
+    command: 'npm run start:e2e-tests',
+    cwd: '../backend',
+    url: 'http://localhost:3003',
+    reuseExistingServer: !process.env.CI,
+    env: {
+      TEST_MONGODB_URI: process.env.TEST_MONGODB_URI,
+      SECRET: process.env.SECRET
+    }
+  })
+} else {
+  webServerConfig.push({
+    command: 'npm run start:e2e-tests-local',
+    cwd: '../backend',
+    url: 'http://localhost:3003',
+    reuseExistingServer: !process.env.CI
+  })
+}
+
 export default defineConfig({
   testDir: './tests',
   /* Do not run tests in files in parallel */
@@ -65,20 +95,7 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: [
-    {
-      command: 'npm run dev',
-      cwd: '../frontend',
-      url: 'http://localhost:5173',
-      reuseExistingServer: !process.env.CI,
-    },
-    {
-      command: 'npm run start:test',
-      cwd: '../backend',
-      url: 'http://localhost:3003',
-      reuseExistingServer: !process.env.CI
-    }
-  ],
+  webServer: webServerConfig,
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',

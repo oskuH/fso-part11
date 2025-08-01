@@ -6,7 +6,7 @@ const {
   MONGODB_URI, TEST_MONGODB_URI, NODE_ENV, PORT
 } = process.env;
 
-const DB_URI = NODE_ENV === 'test'
+const DB_URI = NODE_ENV === 'test' | 'test-local'
   ? TEST_MONGODB_URI
   : MONGODB_URI;
 
