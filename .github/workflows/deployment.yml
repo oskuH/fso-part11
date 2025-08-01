@@ -35,7 +35,7 @@ jobs:
         working-directory: ./backend
         env:
           TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-        run: npm test:CI
+        run: npm run test:CI
       - name: Install E2E test dependencies
         working-directory: ./e2e-tests
         run: npm install
