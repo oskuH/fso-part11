@@ -6,22 +6,24 @@ const LoginForm = ({
   <form onSubmit={handleLogin}>
     <div>
       <h2>log in to application</h2>
-      username
+      <label htmlFor="username">username</label>
       <input
         className="username-input"
         type="text"
         value={username}
         name="Username"
+        id="username"
         onChange={handleUsernameChange}
       />
     </div>
     <div>
-      password
+      <label htmlFor="password">password</label>
       <input
         className="password-input"
         type="password"
         value={password}
         name="Password"
+        id="password"
         onChange={handlePasswordChange}
       />
     </div>

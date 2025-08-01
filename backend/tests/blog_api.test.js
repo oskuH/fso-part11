@@ -240,7 +240,7 @@ describe('when there is initially one user in db', () => {
     expect(usernames).toContain(newUser.username);
   });
 
-  test('a non-unique username gives 400', async () => {
+  test('a non-unique username gives 409', async () => {
     const newUser = {
       username: 'root',
       name: 'Oskari',
@@ -250,7 +250,7 @@ describe('when there is initially one user in db', () => {
     await api
       .post('/api/users')
       .send(newUser)
-      .expect(400);
+      .expect(409);
   });
 
   test('a username shorter than 3 characters gives 400', async () => {

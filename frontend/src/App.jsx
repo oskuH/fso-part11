@@ -135,24 +135,28 @@ const App = () => {
 
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
 
+  const blogListStyle = {
+    listStyleType: 'none'
+  };
+
   return (
     <div>
       <h2>blogs</h2>
       <SuccessNotification message={successMessage} />
       <ErrorNotification message={errorMessage} />
       <p>
-        <span className="logged-user">{user.name} logged in</span>
+        <output className="logged-user" id="logged-user">{user.name} logged in</output>
         <button id="log-out-button" onClick={handleLogout}>logout</button>
       </p>
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
         <BlogForm addBlog={createBlog} />
       </Togglable>
-      <div className="listed-blogs">
+      <ol className="listed-blogs" style={blogListStyle}>
         {sortedBlogs
           .map(blog =>
-            <Blog key={blog.id} blog={blog} updateBlog={updateBlog} user={user} deleteBlog={removeBlog}/>
+            <li key={blog.id}><Blog blog={blog} updateBlog={updateBlog} user={user} deleteBlog={removeBlog}/></li>
           )}
-      </div>
+      </ol>
     </div>
   );
 };

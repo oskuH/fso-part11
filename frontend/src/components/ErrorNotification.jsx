@@ -14,9 +14,9 @@ const ErrorNotification = ({ message }) => {
   }
 
   return (
-    <div className="error-message" style={notificationStyle}>
+    <dialog id="error-notification" style={notificationStyle} open>
       {message}
-    </div>
+    </dialog>
   );
 };
 

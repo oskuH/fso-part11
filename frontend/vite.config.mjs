@@ -15,7 +15,10 @@ export default defineConfig(({ command }) => {
   if (command === 'serve') {
     config.server = {
       proxy: {
-        '/api': 'http://localhost:3003'
+        '/api': {
+          target: 'http://localhost:3003',
+          changeOrigin: true
+        }
       }
     };
   }
