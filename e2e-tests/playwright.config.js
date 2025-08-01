@@ -31,7 +31,8 @@ if (process.env.CI) {
     env: {
       TEST_MONGODB_URI: process.env.TEST_MONGODB_URI,
       SECRET: process.env.SECRET
-    }
+    },
+    stdout: 'pipe'
   })
 } else {
   webServerConfig.push({
