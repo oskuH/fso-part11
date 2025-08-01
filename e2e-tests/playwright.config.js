@@ -30,7 +30,8 @@ if (process.env.CI) {
     reuseExistingServer: !process.env.CI,
     env: {
       TEST_MONGODB_URI: process.env.TEST_MONGODB_URI,
-      SECRET: process.env.SECRET
+      SECRET: process.env.SECRET,
+      PORT: 3003
     },
     stdout: 'pipe'
   })
