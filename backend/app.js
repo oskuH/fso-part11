@@ -1,14 +1,16 @@
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
 require('express-async-errors');
 const mongoose = require('mongoose');
-const config = require('./utils/config');
+const path = require('path');
+
 const blogsRouter = require('./controllers/blogs');
 const usersRouter = require('./controllers/users');
 const loginRouter = require('./controllers/login');
+
+const config = require('./utils/config');
 const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
-const path = require('path');
 
 const app = express();
 

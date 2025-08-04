@@ -1,6 +1,7 @@
-import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
+
 import BlogForm from './BlogForm';
 
 test('<BlogForm /> calls the event handler with the right details', async () => {
