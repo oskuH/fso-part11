@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+env:
+  SKIP_IN_COMMIT_MESSAGES: ${{ contains(join(github.event.commits.*.message), '#skip') }}
 
 jobs:
   deployment_pipeline:
@@ -55,3 +61,32 @@ jobs:
           name: playwright-report
           path: e2e-tests/playwright-report/
           retention-days: 30
+      - name: Trigger deployment
+        if: ${{ github.event_name == 'push' }}
+        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+      - name: Notify Discord about successful deployment
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645
+        if: ${{ github.event_name == 'push' && env.SKIP_IN_COMMIT_MESSAGES != 'true' }}
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: "A new version of bloglist deployed"
+      - name: Notify Discord about failed build
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645
+        if: ${{ failure() && github.event_name == 'push' }}
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: "bloglist build failed. Commit ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }} broke the build."
+  
+  tag_release:
+    needs: [deployment_pipeline]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' && env.SKIP_IN_COMMIT_MESSAGES != 'true' }}
+        uses: anothrNick/github-tag-action@e528bc2b9628971ce0e6f823f3052d1dcd9d512c
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
