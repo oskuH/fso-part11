@@ -23,7 +23,7 @@ mongoose.connect(config.DB_URI)
     logger.error(`error connecting to MongoDB: ${error.message}`);
   });
 
-const pathToFrontendBuild = path.join(__dirname, '../frontend/dist');
+const pathToFrontendBuild = path.join(__dirname, '/dist');
 app.use(express.static(pathToFrontendBuild));
 app.use(cors());
 app.use(express.json());

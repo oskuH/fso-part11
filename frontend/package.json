@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:deploy": "vite build && cp -r dist ../backend",
     "eslint": "eslint './**/*.{js,jsx}'",
     "preview": "vite preview",
     "test": "vitest run"
